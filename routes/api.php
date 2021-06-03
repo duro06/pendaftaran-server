@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,18 +19,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return ['data'=>$request->user()];
 });
 
 // Auth
-Route::group(['prefix' => 'auth'], function() {
+Route::group(['prefix' => '/auth'], function() {
     Route::group(['middleware'=>'auth:sanctum'], function(){
-        Route::get('logout', 'Auth\LoginController@logout');
+        Route::get('logout', [LoginController::class, 'logout']);
     });
 
-    // Route::post('register', 'Auth\AuthController@register'); // ini untuk alamat api/auth/register
-    Route::post('login', 'Auth\LoginController@login');
-    Route::post('coba', 'Auth\LoginController@coba');
+    Route::post('register', [RegisterController::class, 'register']); // ini untuk alamat api/auth/register
+    Route::post('login', [LoginController::class, 'login']);
+    Route::post('coba', [LoginController::class, 'coba']);
         
 
 });
