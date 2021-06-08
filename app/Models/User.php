@@ -43,4 +43,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function bio()
+    {
+        return $this->hasMany(Bio::class, 'user_id', 'id');
+    }
+    public function nilai()
+    {
+        return $this->hasMany(Nilai::class, 'user_id', 'id');
+    }
+    public function media()
+    {
+        return $this->hasMany(Media::class, 'user_id', 'id');
+    }
 }

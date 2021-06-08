@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -55,7 +59,7 @@ class LoginController extends Controller
             ]);
         }
 
-        return response()->json(['token'=>$user->createToken($user->roles)->plainTextToken]);
+        return response()->json(['token'=>$user->createToken($user->role)->plainTextToken]);
 
     }
 
