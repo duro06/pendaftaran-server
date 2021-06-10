@@ -17,7 +17,7 @@ class CreateMediasTable extends Migration
             $table->id();
             $table->string('user_id'); 
             $table->string('semester'); 
-            $table->string('mapel'); 
+            $table->string('mapel_id'); 
             $table->string('path'); 
             $table->timestamps();
         });

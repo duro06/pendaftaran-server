@@ -9,15 +9,12 @@ class Bio extends Model
 {
     use HasFactory;
     
-    protected $table = 'nilais';
+    protected $table = 'mapels';
     protected $guarded = [];
 
-    public function nilai()
-    {
-        return $this->hasOne(User::class, 'id', 'user_id');
-    }
     public function mapel()
     {
-        return $this->hasOne(Mapel::class, 'id', 'mapel_id');
+        // return $this->hasOne(nilai::class, 'id', 'mapel_id');
+        return $this->hasMany(Nilai::class, 'mapel_id', 'id');
     }
 }
