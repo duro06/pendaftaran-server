@@ -5,19 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Nilai extends Model
+class Forums extends Model
 {
     use HasFactory;
-    
-    protected $table = 'nilais';
+    protected $table = 'forums';
     protected $guarded = [];
-
-    public function nilai()
+    
+    public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
-    }
-    public function mapel()
-    {
-        return $this->hasOne(Mapel::class, 'id', 'mapel_id');
     }
 }
