@@ -3,12 +3,26 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Forum;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ForumController extends Controller
 {
+    public function add_message(Request $request){
+        $user=Auth::user();
+
+        $forum=Forum::create([
+            'user_id'=>$user->id,
+            'user_name'=>$user->name,
+            'message'=>$request->message,
+        ]);
+        return response()->json([
+            'user'=>$user
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *

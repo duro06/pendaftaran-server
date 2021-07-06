@@ -15,6 +15,7 @@ class CreateForumsTable extends Migration
     {
         Schema::create('forums', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('jenjang_id')->nullable();
             $table->bigInteger('user_id')->nullable();
             $table->string('user_name')->nullable();
             $table->longText('message')->nullable();

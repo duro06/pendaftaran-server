@@ -3,6 +3,9 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\API\MeController;
+use App\Http\Controllers\API\MediaController;
+use App\Http\Controllers\API\NilaiController;
+use App\Http\Controllers\API\ForumController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,9 +38,12 @@ Route::group(['prefix' => '/auth'], function() {
 
 });
 
-// profile 
 Route::group(['middleware'=>'auth:sanctum'], function(){
+    // profile 
     Route::put('/me/update/{user}', [MeController::class, 'update']);
     Route::post('/me/upload_image/{user}', [MeController::class, 'upload_image']);
     Route::post('/prokc/sw-token', [MeController::class, 'swToken']);
+    
+    //forums
+    Route::post('forum/add_message',[ForumController::class, 'add_message']);
 });
