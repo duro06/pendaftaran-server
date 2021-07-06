@@ -46,4 +46,5 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     
     //forums
     Route::post('forum/add_message',[ForumController::class, 'add_message']);
+    Route::get('forum/get_chat',[ForumController::class, 'get_chat']);
 });
