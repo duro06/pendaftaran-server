@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Forum;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\Fcm\BroadcastMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -16,14 +17,14 @@ class ForumController extends Controller
         $all=[];
         $token=[];
         $finally=[];
-        if($request->jenjang_id){
+        if($request->sekolah_id){
             $forum=Forum::create([
                 'user_id'=>$user->id,
                 'user_name'=>$user->name,
-                'jenjang_id'=>$request->jenjang_id,
+                'sekolah_id'=>$request->sekolah_id,
                 'message'=>$request->message,
             ]);
-            $forum_user=Forum::select('user_id')->where('jenjang_id',$request->jenjang_id)->distinct()->get();
+            $forum_user=Forum::select('user_id')->where('sekolah_id',$request->sekolah_id)->distinct()->get();
             foreach ($forum_user as $key) {
                 array_push($all,$key->user_id);
             }
@@ -43,12 +44,14 @@ class ForumController extends Controller
         }
         if ($forum) {
             // $pesan=Forum::where('lelang_id',$request->lelang_id)->get();
-            if(count($token)>=1){
+            if(count($token)>=1 && $token!=null){
                 BroadcastMessage::sendMessage($user->name, 'chat baru dari forum: '. $request->message, "forum/".$request->lelang_id, $token);
             }
             $data=['data'=>$request->message];
             return response()->json([
                 'chat'=>$data,
+                'token'=>$token,
+                'Count token'=>count($token),
             ],200);
         } else {
             return response()->json([
@@ -59,9 +62,9 @@ class ForumController extends Controller
     }
 
     public function get_chat(){
-        $jenjang=request()->jenjang_id;
-        if($jenjang){
-            $pesan=Forum::where('jenjang_id',$jenjang)
+        $sekolah=request()->sekolah_id;
+        if($sekolah){
+            $pesan=Forum::where('sekolah_id',$sekolah)
             ->orderBy('created_at','ASC')
             ->paginate(20);
         }else{
