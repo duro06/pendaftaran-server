@@ -15,9 +15,10 @@ class CreateMediasTable extends Migration
     {
         Schema::create('medias', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id'); 
-            $table->string('semester'); 
-            $table->string('mapel_id'); 
+            $table->bigInteger('user_id'); 
+            $table->bigInteger('bio_id')->nullable(); 
+            $table->bigInteger('mapel_id')->nullable(); 
+            $table->string('semester')->nullable(); 
             $table->string('path'); 
             $table->timestamps();
         });
