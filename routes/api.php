@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\API\MeController;
+use App\Http\Controllers\API\BioController;
 use App\Http\Controllers\API\MediaController;
 use App\Http\Controllers\API\NilaiController;
 use App\Http\Controllers\API\ForumController;
@@ -48,4 +49,8 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     Route::post('forum/add_message',[ForumController::class, 'add_message']);
     Route::get('forum/get_chat',[ForumController::class, 'get_chat']);
     Route::get('forum/get_user',[ForumController::class, 'get_user']);
+    
+    //Bio
+    Route::get('bio',[BioController::class, 'index']);
+    Route::put('bio/update/{bio}',[BioController::class, 'update']);
 });

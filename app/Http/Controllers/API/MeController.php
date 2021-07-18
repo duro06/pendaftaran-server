@@ -17,9 +17,9 @@ class MeController extends Controller
         if ($user) {
             $user->notelp = $request->notelp;
             // $user->nowhatsapp = $request->nowhatsapp;
-            // $user->alamat = $request->alamat;
-            // $user->provinsi = $request->provinsi;
-            // $user->kota = $request->kota;
+            $user->alamat = $request->alamat;
+            $user->provinsi = $request->provinsi;
+            $user->kota = $request->kota;
             if ($user->save()) {
                 return response()->json($user,200);
             } else {

@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Bio;
 use App\Models\User;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class BioController extends Controller
 {
@@ -18,7 +18,12 @@ class BioController extends Controller
      */
     public function index()
     {
-        //
+        $user=Auth::user();
+        $bio=Bio::where('user_id',$user->id)->first();
+
+        return response()->json([
+            'data'=>$bio
+        ]);
     }
 
     /**
@@ -52,7 +57,22 @@ class BioController extends Controller
      */
     public function update(Request $request, Bio $bio)
     {
-        //
+        if ($bio) {
+            $bio->ttl = $request->ttl;
+            if ($bio->save()) {
+                return response()->json($bio,200);
+            } else {
+                return response()->json([
+                    'status'       => 'Error on Updated',
+                    'status_code'   => 500
+                ],500);
+            } 
+        } else {
+            return response()->json([
+                'status'       => 'User tidak ditemukan',
+                'status_code'   => 500
+            ],500);
+        }
     }
 
     /**
