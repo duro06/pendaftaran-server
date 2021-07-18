@@ -65,16 +65,40 @@ class ForumController extends Controller
         $sekolah=request()->sekolah_id;
         if($sekolah){
             $pesan=Forum::where('sekolah_id',$sekolah)
-            ->orderBy('created_at','ASC')
+            ->orderBy('created_at','DESC')
             ->paginate(20);
         }else{
-            $pesan=Forum::orderBy('created_at','ASC')
+            $pesan=Forum::orderBy('created_at','DESC')
             ->paginate(20);
         }
-
+        
         return response()->json([
             'chat'=>$pesan
         ]);
+    }
+    
+    public function get_user(){
+        $sekolah=request()->sekolah_id;
+        $users=[];
+        if($sekolah){
+            $user=Forum::select('user_id')->where('sekolah_id',$sekolah)->distinct()->get();
+            foreach($user as $key){
+                $get=User::find($key->user_id);
+                array_push($users,$get);
+            }
+        }else{
+            $user=Forum::select('user_id')->distinct()->get();
+            foreach($user as $key){
+                $get=User::find($key->user_id);
+                array_push($users,$get);
+            }
+            
+        }
+        
+        return response()->json([
+            'user'=>$users
+        ]);
+        
     }
     /**
      * Display a listing of the resource.
