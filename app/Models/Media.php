@@ -12,8 +12,12 @@ class Media extends Model
         protected $table = 'medias';
         protected $guarded = [];
 
-    public function user()
+    public function media()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+    public function mapel()
+    {
+        return $this->hasOne(Mapel::class, 'id', 'mapel_id');
     }
 }

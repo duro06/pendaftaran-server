@@ -24,7 +24,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return ['data'=>$request->user()];
+    $user=$request->user();
+    $user->load('nilai.mapel');
+    $user->load('bio');
+    $user->load('media.mapel');
+    return ['data'=>$user];
 });
 
 // Auth
@@ -58,5 +62,7 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     
     // mapel dan Nilai
     Route::get('mapel',[NilaiController::class, 'index']);
+    Route::post('mapel/nilai',[NilaiController::class, 'store']);
+    Route::post('mapel/upload_image/{media}',[NilaiController::class, 'upload_image']);
 
 });
