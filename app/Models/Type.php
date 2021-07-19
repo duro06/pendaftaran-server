@@ -20,6 +20,6 @@ class Type extends Model
     public function media()
     {
         // return $this->hasOne(nilai::class, 'id', 'mapel_id');
-        return $this->hasMany(Media::class, 'mapel_id', 'id');
+        return $this->hasOne(Media::class, 'type_id', 'id');
     }
 }

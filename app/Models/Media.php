@@ -16,8 +16,8 @@ class Media extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
-    public function mapel()
+    public function type()
     {
-        return $this->hasOne(Mapel::class, 'id', 'mapel_id');
+        return $this->hasOne(Type::class, 'id', 'type_id');
     }
 }

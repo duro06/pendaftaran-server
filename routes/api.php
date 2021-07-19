@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     $user=$request->user();
     $user->load('nilai.mapel');
     $user->load('bio');
-    $user->load('media.mapel');
+    $user->load('media.type');
     return ['data'=>$user];
 });
 
@@ -63,6 +63,7 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     // mapel dan Nilai
     Route::get('mapel',[NilaiController::class, 'index']);
 
+    Route::get('nilai/nilai_by',[NilaiController::class, 'nilai_by']);
     Route::post('nilai',[NilaiController::class, 'store']);
     
     Route::get('type',[NilaiController::class, 'type']);
