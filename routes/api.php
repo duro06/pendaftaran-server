@@ -62,7 +62,10 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     
     // mapel dan Nilai
     Route::get('mapel',[NilaiController::class, 'index']);
-    Route::post('mapel/nilai',[NilaiController::class, 'store']);
-    Route::post('mapel/upload_image/{media}',[NilaiController::class, 'upload_image']);
+
+    Route::post('nilai',[NilaiController::class, 'store']);
+    
+    Route::get('type',[NilaiController::class, 'type']);
+    Route::post('type/upload_image/{media}',[NilaiController::class, 'upload_image']);
 
 });

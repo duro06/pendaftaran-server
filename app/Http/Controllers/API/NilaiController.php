@@ -6,6 +6,7 @@ use App\Models\Nilai;
 use App\Models\Mapel;
 use App\Models\User;
 use App\Models\Media;
+use App\Models\Type;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,11 @@ class NilaiController extends Controller
     {
         $mapel=Mapel::get();
         return response()->json($mapel,200);
+    }
+    public function type()
+    {
+        $type=Type::get();
+        return response()->json($type,200);
     }
 
     public function store(Request $request){
