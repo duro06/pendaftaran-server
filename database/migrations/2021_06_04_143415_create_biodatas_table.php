@@ -16,14 +16,13 @@ class CreateBiodatasTable extends Migration
         Schema::create('biodatas', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->timestamp('ttl')->nullable();
+            $table->date('ttl')->nullable();
+            $table->string('asal_sekolah')->nullable();
             $table->string('jalur')->nullable();
             $table->string('alamat')->nullable();
             $table->string('kabupaten')->nullable();
             $table->string('propinsi')->nullable();
-            $table->string('alamat_asal')->nullable();
-            $table->string('kabupaten_asal')->nullable();
-            $table->string('propinsi_asal')->nullable();
+            $table->string('path')->nullable();
             $table->timestamps();
         });
     }

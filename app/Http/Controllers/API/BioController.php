@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BioController extends Controller
 {
@@ -20,12 +21,12 @@ class BioController extends Controller
     {
         $user=Auth::user();
         $bio=Bio::where('user_id',$user->id)->first();
-
+        
         return response()->json([
             'data'=>$bio
         ]);
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -34,7 +35,23 @@ class BioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user=User::find($request->user_id);
+        $bio=Bio::where('user_id',$request->user_id)->first();
+        $data='';
+        if($user){
+            if($bio){
+                $data='Sudah ada';
+            }else{
+                Bio::create([
+                    'user_id'=>$request->user_id
+                ]);
+                $data='Data Dibuat';
+            }
+        }
+
+        return response()->json([
+            'data'=>$data,
+        ]);
     }
 
     /**
@@ -43,10 +60,31 @@ class BioController extends Controller
      * @param  \App\Models\Bio  $bio
      * @return \Illuminate\Http\Response
      */
-    public function show(Bio $bio)
+    public function upload_image(Request $request, Bio $bio)
     {
-        //
+        $old_path = $bio->path;
+        Storage::delete('public/'.$old_path);
+        if($request->hasFile('image')) {
+            $request->validate([
+                'image'=>'required|image|mimes:jpeg,png,jpg'
+            ]);
+            $path = $request->file('image')->store('photo', 'public');
+            $bio->path = $path; 
+            
+        }
+       
+        if ($bio->save()) {
+            return response()->json($bio,200);
+        } else {
+            return response()->json([
+                'message'       => 'Error on Updated',
+                'status_code'   => 500
+            ],500);
+        } 
+        // return response()->json($request->all(),200);
+
     }
+    
 
     /**
      * Update the specified resource in storage.
@@ -58,9 +96,12 @@ class BioController extends Controller
     public function update(Request $request, Bio $bio)
     {
         if ($bio) {
-            $bio->ttl = $request->ttl;
-            if ($bio->save()) {
-                return response()->json($bio,200);
+             $input = $request->all();
+            
+            if ($bio->fill($input)->save()) {
+                return response()->json([
+                    'bio'=>$bio,
+                    'input'=>$input],200);
             } else {
                 return response()->json([
                     'status'       => 'Error on Updated',

@@ -53,4 +53,6 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     //Bio
     Route::get('bio',[BioController::class, 'index']);
     Route::put('bio/update/{bio}',[BioController::class, 'update']);
+    Route::post('bio/store',[BioController::class, 'store']);
+    Route::post('bio/upload_image/{bio}', [BioController::class, 'upload_image']);
 });
