@@ -74,4 +74,5 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     //pendaftaran
     Route::get('daftar',[PendaftaranController::class, 'index']);
     Route::get('daftar/peserta',[PendaftaranController::class, 'peserta']);
+    Route::post('daftar/daftar_peserta',[PendaftaranController::class, 'daftar_peserta']);
 });

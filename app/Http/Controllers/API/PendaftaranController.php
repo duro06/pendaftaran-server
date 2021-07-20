@@ -8,6 +8,7 @@ use App\Models\Pendaftar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class PendaftaranController extends Controller
 {
@@ -25,6 +26,7 @@ class PendaftaranController extends Controller
     public function peserta()
     {
         $daftar=Pendaftar::get();
+        $daftar->load('user.bio');
         return response()->json($daftar,200);
     }
 
@@ -34,9 +36,26 @@ class PendaftaranController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function daftar_peserta(Request $request)
     {
-        //
+        $request->validate([
+                'pendaftaran_id'=>'required',
+            ]);
+
+        $user=Auth::user();
+        $pendaftar=Pendaftar::create([
+            'name'=>$user->name,
+            'user_id'=>$user->id,
+            'pendaftaran_id'=>$request->pendaftaran_id,
+            'status'=>0
+        ]);
+
+        if($pendaftar){
+            return response()->json('success',200);
+        }else{
+            return response()->json('failed',500);
+
+        }
     }
 
     /**
