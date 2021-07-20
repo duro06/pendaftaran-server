@@ -39,38 +39,42 @@ class NilaiController extends Controller
     }
 
     public function store(Request $request){
-        $mapel=Nilai::find($request->nilai_id);
-        $user=User::find($request->id);
-        $data='';
-        $return=$request->all();
-
-        if(!empty($mapel)){
-            $data='ada data';
-            $mapel->nilai=$request->nilai;
-            $mapel->save();
-        }else{
-            $data='tidak ada data';
+        $request->validate([
+                'user_id'=>'required',
+                'mapel_id'=>'required',
+                'type_id'=>'required',
+                'nilai'=>'required'
+            ]);
             $mapel=Nilai::create([
-                'user_id'=>$request->id,
+                'user_id'=>$request->user_id,
                 'mapel_id'=>$request->mapel_id,
+                'type_id'=>$request->type_id,
                 'nilai'=>$request->nilai
             ]);
-            $media=Media::create([
-                'user_id'=>$request->id,
-                'mapel_id'=>$request->mapel_id,
-                'name'=>$request->mapel_name,
+        if($mapel){
+            return response()->json([
+                'mapel'=>$mapel,
                 
-            ]);
+            ],200);
+        }else{
+            
+            return response()->json([
+                'message'=>'failed',
+                
+            ],500);
         }
-        $check=empty($mapel);
-        return response()->json([
-            'data'=>$data,
-            'user'=>$user,
-            'return'=>$return,
-            'mapel'=>$mapel,
-            'check'=>$check
-        ]);
     }
+
+    public function update(Request $request, Nilai $nilai){
+        $nilai->nilai=$request->nilai;
+        if($nilai->save()){
+            return response()->json('success',200);
+        }else{
+            return response()->json('failed',500);
+
+        }
+    }
+
 
     public function upload_image(Request $request, Media $media)
     {

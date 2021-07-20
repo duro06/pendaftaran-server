@@ -65,6 +65,7 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
 
     Route::get('nilai/nilai_by',[NilaiController::class, 'nilai_by']);
     Route::post('nilai',[NilaiController::class, 'store']);
+    Route::post('nilai/update/{nilai}',[NilaiController::class, 'update']);
     
     Route::get('type',[NilaiController::class, 'type']);
     Route::post('type/upload_image/{media}',[NilaiController::class, 'upload_image']);
