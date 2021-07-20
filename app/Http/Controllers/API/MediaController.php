@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\User;
+use App\Models\Pendaftaran;
+use App\Models\Pendaftar;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -19,7 +21,8 @@ class MediaController extends Controller
      */
     public function index()
     {
-        //
+        $daftar=Pendaftaran::get();
+        return response()->json($daftar,200);
     }
 
     /**

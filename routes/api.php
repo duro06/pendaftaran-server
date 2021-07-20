@@ -7,6 +7,7 @@ use App\Http\Controllers\API\BioController;
 use App\Http\Controllers\API\MediaController;
 use App\Http\Controllers\API\NilaiController;
 use App\Http\Controllers\API\ForumController;
+use App\Http\Controllers\API\PendaftaranController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -62,12 +63,15 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     
     // mapel dan Nilai
     Route::get('mapel',[NilaiController::class, 'index']);
-
+    
     Route::get('nilai/nilai_by',[NilaiController::class, 'nilai_by']);
     Route::post('nilai',[NilaiController::class, 'store']);
     Route::post('nilai/update/{nilai}',[NilaiController::class, 'update']);
     
     Route::get('type',[NilaiController::class, 'type']);
     Route::post('type/upload_image/{media}',[NilaiController::class, 'upload_image']);
-
+    
+    //pendaftaran
+    Route::get('daftar',[PendaftaranController::class, 'index']);
+    Route::get('daftar/peserta',[PendaftaranController::class, 'peserta']);
 });

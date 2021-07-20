@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\Pendaftaran;
+use App\Models\Pendaftar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PendaftaranController extends Controller
 {
@@ -14,7 +18,14 @@ class PendaftaranController extends Controller
      */
     public function index()
     {
-        //
+        $daftar=Pendaftaran::get();
+        return response()->json($daftar,200);
+    }
+
+    public function peserta()
+    {
+        $daftar=Pendaftar::get();
+        return response()->json($daftar,200);
     }
 
     /**
