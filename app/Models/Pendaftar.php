@@ -16,4 +16,10 @@ class Pendaftar extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function statusby()
+    {
+        return $this->hasOne(User::class, 'id', 'status_by');
+    }
+
 }

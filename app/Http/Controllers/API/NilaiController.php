@@ -24,6 +24,7 @@ class NilaiController extends Controller
     {
         $type=Type::get();
         $type->load('media');
+        $type->load('mapel');
         return response()->json($type,200);
     }
 

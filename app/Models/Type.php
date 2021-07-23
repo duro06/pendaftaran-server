@@ -15,7 +15,7 @@ class Type extends Model
     public function mapel()
     {
         // return $this->hasOne(nilai::class, 'id', 'mapel_id');
-        return $this->hasMany(Nilai::class, 'mapel_id', 'id');
+        return $this->hasMany(Mapel::class, 'type_id', 'id');
     }
     public function media()
     {
