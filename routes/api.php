@@ -8,6 +8,7 @@ use App\Http\Controllers\API\MediaController;
 use App\Http\Controllers\API\NilaiController;
 use App\Http\Controllers\API\ForumController;
 use App\Http\Controllers\API\PendaftaranController;
+use App\Http\Controllers\API\AdminController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -69,10 +70,20 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     Route::post('nilai/update/{nilai}',[NilaiController::class, 'update']);
     
     Route::get('type',[NilaiController::class, 'type']);
-    Route::post('type/upload_image/{media}',[NilaiController::class, 'upload_image']);
+    Route::post('type/upload_image/{media}',[MediaController::class, 'upload_image']);
     
     //pendaftaran
     Route::get('daftar',[PendaftaranController::class, 'index']);
     Route::get('daftar/peserta',[PendaftaranController::class, 'peserta']);
     Route::post('daftar/daftar_peserta',[PendaftaranController::class, 'daftar_peserta']);
+    
+    // admin 
+    Route::post('admin/mapel/add',[AdminController::class, 'add_mapel']);
+    Route::post('admin/mapel/edit',[AdminController::class, 'edit_mapel']);
+    Route::post('admin/mapel/delete',[AdminController::class, 'delete_mapel']);
+    Route::post('admin/type/add',[AdminController::class, 'add_type']);
+    Route::post('admin/type/edit',[AdminController::class, 'edit_type']);
+    Route::post('admin/type/delete',[AdminController::class, 'delete_type']);
+    
+
 });

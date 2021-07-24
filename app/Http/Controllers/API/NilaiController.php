@@ -77,29 +77,5 @@ class NilaiController extends Controller
     }
 
 
-    public function upload_image(Request $request, Media $media)
-    {
-        $old_path = $media->path;
-        Storage::delete('public/'.$old_path);
-        if($request->hasFile('image')) {
-            $request->validate([
-                'image'=>'required|image|mimes:jpeg,png,jpg'
-            ]);
-            $path = $request->file('image')->store('photo', 'public');
-            $media->path = $path; 
-            
-        }
-       
-        if ($media->save()) {
-            return response()->json($media,200);
-        } else {
-            return response()->json([
-                'message'       => 'Error on Updated',
-                'status_code'   => 500
-            ],500);
-        } 
-        // return response()->json($request->all(),200);
-
-    }
 
 }
