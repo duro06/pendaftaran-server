@@ -85,5 +85,10 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     Route::post('admin/type/edit',[AdminController::class, 'edit_type']);
     Route::post('admin/type/delete',[AdminController::class, 'delete_type']);
     
+    Route::get('admin/inactive_pendaftaran',[PendaftranController::class, 'inactive_pendaftaran']);
+    Route::post('admin/add_pendaftaran',[PendaftranController::class, 'add_pendaftaran']);
+    Route::post('admin/edit_pendaftaran',[PendaftranController::class, 'edit_pendaftaran']);
+    Route::post('admin/hapus_pendaftaran',[PendaftranController::class, 'hapus_pendaftaran']);
+    Route::post('admin/restore_pendaftaran',[PendaftranController::class, 'restore_pendaftaran']);
 
 });

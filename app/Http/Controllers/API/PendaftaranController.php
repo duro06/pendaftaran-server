@@ -58,37 +58,70 @@ class PendaftaranController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Pendaftaran  $pendaftaran
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pendaftaran $pendaftaran)
-    {
-        //
-    }
+    // admin
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pendaftaran  $pendaftaran
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Pendaftaran $pendaftaran)
-    {
-        //
-    }
+    public function add_pendaftaran(Request $request){
+        $request->validate([
+                'name'=>'required',
+                'start'=>'required',
+                'stop'=>'required',
+                'status'=>'required',
+            ]);
+            $pendaftaran=Pendaftar::create([
+            'name'=>$request->name,
+            'start'=>$request->start,
+            'stop'=>$request->stop,
+            'status'=>$request->status
+        ]);
+        if($pendaftaran){
+            return response()->json('success',200);
+        }else{
+            return response()->json('failed',500);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Pendaftaran  $pendaftaran
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Pendaftaran $pendaftaran)
-    {
-        //
+        }
+    }
+    public function edit_pendaftaran(Request $req){
+        $req->validate([
+            'id'=>'required'
+        ]);
+        $pendaftaran=Pendaftaran::find($req->id);
+        $pendaftaran=Pendaftar::update([
+        'name'=>$request->name,
+        'status'=>$request->status
+    ]);
+    if($pendaftaran){
+        return response()->json('success',200);
+    }else{
+        return response()->json('failed',500);
+    
+    }
+    }
+    public function hapus_pendaftaran(Request $req){
+        $req->validate([
+            'id'=>'required'
+        ]);
+        $pendaftaran=Pendaftaran::find($req->id);
+        if($pendaftaran->trashed()){
+            return response()->json('success',200);
+        }else{
+            return response()->json('failed',500);
+        
+    }
+}
+public function restore_pendaftaran(Request $req){
+        $req->validate([
+            'id'=>'required'
+        ]);
+        $pendaftaran=Pendaftaran::find($req->id);
+        if($pendaftaran->restore()){
+        return response()->json('success',200);
+        }else{
+        return response()->json('failed',500);
+        
+        }
+
+    }
+    public function inactive_pendaftaran(){
+        $pendaftaran=Pendaftaran::where('deleted_at')->get();
     }
 }
