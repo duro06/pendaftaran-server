@@ -9,6 +9,7 @@ use App\Http\Controllers\API\NilaiController;
 use App\Http\Controllers\API\ForumController;
 use App\Http\Controllers\API\PendaftaranController;
 use App\Http\Controllers\API\AdminController;
+use App\Http\Controllers\API\BerkasController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -90,5 +91,7 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     Route::post('admin/edit_pendaftaran',[PendaftaranController::class, 'edit_pendaftaran']);
     Route::post('admin/hapus_pendaftaran',[PendaftaranController::class, 'hapus_pendaftaran']);
     Route::post('admin/restore_pendaftaran',[PendaftaranController::class, 'restore_pendaftaran']);
-
+    
+    Route::get('admin/berkas',[BerkasController::class, 'get_all']);
+    Route::get('admin/berkas/by_id',[BerkasController::class, 'get_by_id']);
 });
