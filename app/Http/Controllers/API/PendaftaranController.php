@@ -67,7 +67,7 @@ class PendaftaranController extends Controller
                 'stop'=>'required',
                 'status'=>'required',
             ]);
-            $pendaftaran=Pendaftar::create([
+            $pendaftaran=Pendaftaran::create([
             'name'=>$request->name,
             'start'=>$request->start,
             'stop'=>$request->stop,
@@ -85,11 +85,11 @@ class PendaftaranController extends Controller
             'id'=>'required'
         ]);
         $pendaftaran=Pendaftaran::find($req->id);
-        $pendaftaran=Pendaftar::update([
-        'name'=>$request->name,
-        'status'=>$request->status
-    ]);
-    if($pendaftaran){
+
+        $pendaftaran->name=$req->name;
+        $pendaftaran->status=$req->status;
+    
+    if($pendaftaran->save()){
         return response()->json('success',200);
     }else{
         return response()->json('failed',500);
@@ -100,28 +100,30 @@ class PendaftaranController extends Controller
         $req->validate([
             'id'=>'required'
         ]);
-        $pendaftaran=Pendaftaran::find($req->id);
-        if($pendaftaran->trashed()){
-            return response()->json('success',200);
-        }else{
-            return response()->json('failed',500);
+        $pendaftaran=Pendaftaran::find($req->id)->delete();
+        return response()->json('success',200);
+    //     if($pendaftaran->trashed()){
+    //     }else{
+    //         return response()->json(['message'=>'failed','data'=>$pendaftaran],500);
         
-    }
+    // }
 }
 public function restore_pendaftaran(Request $req){
         $req->validate([
             'id'=>'required'
         ]);
-        $pendaftaran=Pendaftaran::find($req->id);
+        $pendaftaran=Pendaftaran::onlyTrashed()->where('id',$req->id)->first();
         if($pendaftaran->restore()){
-        return response()->json('success',200);
+            return response()->json('success',200);
         }else{
-        return response()->json('failed',500);
-        
+            return response()->json(['data'=>$pendaftaran,'id'=>$req->id],500);
+            
         }
 
     }
     public function inactive_pendaftaran(){
-        $pendaftaran=Pendaftaran::where('deleted_at')->get();
+        $pendaftaran=Pendaftaran::onlyTrashed()->get();
+        
+        return response()->json($pendaftaran,200);
     }
 }

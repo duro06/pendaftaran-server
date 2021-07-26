@@ -20,7 +20,6 @@ class CreatePendaftaransTable extends Migration
             $table->date('start')->nullable();
             $table->date('stop')->nullable();
             $table->integer('status')->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }
