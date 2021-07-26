@@ -25,7 +25,7 @@ class PendaftaranController extends Controller
 
     public function peserta()
     {
-        $daftar=Pendaftar::get();
+        $daftar=Pendaftar::where('pendaftaran_id',request()->pendaftaran_id)->get();
         $daftar->load('user.bio');
         return response()->json($daftar,200);
     }

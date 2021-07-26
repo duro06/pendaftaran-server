@@ -19,9 +19,7 @@ class CreateBiodatasTable extends Migration
             $table->date('ttl')->nullable();
             $table->string('asal_sekolah')->nullable();
             $table->string('jalur')->nullable();
-            $table->string('alamat')->nullable();
             $table->string('kabupaten')->nullable();
-            $table->string('propinsi')->nullable();
             $table->string('path')->nullable();
             $table->timestamps();
         });

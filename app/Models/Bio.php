@@ -16,4 +16,13 @@ class Bio extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+    
+    public function nilai()
+    {
+        return $this->hasMany(Nilai::class, 'user_id', 'id');
+    }
+    public function media()
+    {
+        return $this->hasMany(Media::class, 'user_id', 'id');
+    }
 }
