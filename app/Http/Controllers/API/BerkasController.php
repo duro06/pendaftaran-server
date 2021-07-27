@@ -19,6 +19,7 @@ class BerkasController extends Controller
         return response()->json($pendaftar,200);
     }
     public function get_by_id(){
+        $user=Auth::user();
         $pendaftar=Pendaftar::find(request()->id);
         if($pendaftar->status<1){
             $pendaftar->status=1;
