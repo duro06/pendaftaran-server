@@ -10,6 +10,7 @@ use App\Http\Controllers\API\ForumController;
 use App\Http\Controllers\API\PendaftaranController;
 use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\BerkasController;
+use App\Http\Controllers\API\SekolahController;
 
 
 use Illuminate\Http\Request;
@@ -98,4 +99,7 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     Route::get('admin/berkas',[BerkasController::class, 'get_all']);
     Route::get('admin/berkas/by_id',[BerkasController::class, 'get_by_id']);
     Route::post('admin/berkas/status_change',[BerkasController::class, 'status_change']);
+    
+    Route::get('admin/sekolah/get-sekolah',[SekolahController::class, 'index']);
+    Route::post('admin/sekolah/store',[SekolahController::class, 'store']);
 });

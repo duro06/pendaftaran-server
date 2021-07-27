@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Models\Sekolah;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class SekolahController extends Controller
@@ -14,7 +15,10 @@ class SekolahController extends Controller
      */
     public function index()
     {
-        //
+        $sekolah=Sekolah::find(1);
+        
+        return response()->json($sekolah,200);
+
     }
 
     /**
@@ -25,7 +29,14 @@ class SekolahController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $sekolah=Sekolah::where('id',1)->first();
+        $result=$request->all();
+        $sekolah=Sekolah::updateOrCreate(
+            ['id'=>1],
+            $result
+        );
+
+        return response()->json($sekolah,200);
     }
 
     /**

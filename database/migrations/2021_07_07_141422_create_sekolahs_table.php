@@ -17,6 +17,8 @@ class CreateSekolahsTable extends Migration
             $table->id();
             $table->bigInteger('jenjang_id')->nullable();
             $table->string('name')->nullable();
+            $table->string('telepon')->nullable();
+            $table->string('email')->nullable();
             $table->string('alamat')->nullable();
             $table->string('kecamatan')->nullable();
             $table->string('kota')->nullable();
