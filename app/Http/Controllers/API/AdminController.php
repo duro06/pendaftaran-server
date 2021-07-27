@@ -4,14 +4,30 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Type;
 use App\Models\Mapel;
+use App\Models\User;
 
+use App\Http\Controllers\API\Fcm\BroadcastMessage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller{
-
+    public function testFcm(){
+        $token=[];
+        $user=Auth::user();
+        $userToken=$user->fcm_token;
+        array_push($token,$user->fcm_token);
+        $message='Coba kang';
+        // $test=BroadcastMessage::sendMessage($user->name, 'chat baru dari forum: '. $message, "forum/apem", $token);
+        BroadcastMessage::sendMessage($user->name, 'chat baru dari forum: '. $message, "forum/apem", $token);
+        return response()->json([
+            'user'=>$user,
+            // 'test'=>$test,
+            'token'=>$token,
+        ]);
+    }
     public function add_mapel(Request $req){
         $req->validate([
                 'name'=>'required',                

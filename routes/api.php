@@ -11,6 +11,7 @@ use App\Http\Controllers\API\PendaftaranController;
 use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\BerkasController;
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -79,6 +80,8 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     Route::post('daftar/daftar_peserta',[PendaftaranController::class, 'daftar_peserta']);
     
     // admin 
+    Route::get('admin/test-fcm',[AdminController::class, 'testFcm']);
+    
     Route::post('admin/mapel/add',[AdminController::class, 'add_mapel']);
     Route::post('admin/mapel/edit',[AdminController::class, 'edit_mapel']);
     Route::post('admin/mapel/delete',[AdminController::class, 'delete_mapel']);
@@ -94,4 +97,5 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     
     Route::get('admin/berkas',[BerkasController::class, 'get_all']);
     Route::get('admin/berkas/by_id',[BerkasController::class, 'get_by_id']);
+    Route::post('admin/berkas/status_change',[BerkasController::class, 'status_change']);
 });

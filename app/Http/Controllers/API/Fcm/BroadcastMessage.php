@@ -33,7 +33,8 @@ class BroadcastMessage extends Controller
         $dataBuilder->addData(['sender' => $sender, 'message'=>$message, 'click_action'=>$link]);
 
         $option = $optionBuilder->build();
-        $notification = $notificationBuilder->build();
+        // $notification = $notificationBuilder->build();
+        $notification = null;
         $data = $dataBuilder->build();
 
         // $tokens = User::all()->pluck('fcm_token')->toArray();
