@@ -22,6 +22,8 @@ class BerkasController extends Controller
         $pendaftar=Pendaftar::find(request()->id);
         if($pendaftar->status<1){
             $pendaftar->status=1;
+            $pendaftar->status_by=$user->id;
+            $pendaftar->keterangan=null;
             $pendaftar->save();
         }
         $pendaftar->load('user.bio');
@@ -36,6 +38,7 @@ class BerkasController extends Controller
         $pendaftar=Pendaftar::find($request->id);
         $pendaftar->status=$request->status;
         $pendaftar->status_by=$user->id;
+        $pendaftar->keterangan=null;
 
             // return response()->json(['sukses'=>$pendaftar],200);
         if($pendaftar->save()){
@@ -44,6 +47,16 @@ class BerkasController extends Controller
         }else{
             return response()->json('failed',500);
 
+        }
+    }
+
+    //ini di gunakan ketika user sudah mendaftar dan akan mengupdate kelengkapan dokumen
+    public function keteranganPendaftar(){
+        $user=Auth::user();
+        if($user->pendaftar_id!==null){
+            $pendaftar=Pendaftar::find($user->pendaftar_id);
+            $pendaftar->keterangan=$user->name;
+            $pendaftar->save();
         }
     }
 }

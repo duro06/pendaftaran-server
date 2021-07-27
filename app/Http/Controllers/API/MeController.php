@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use\App\Models\User;
 
 use App\Http\Controllers\Controller;
+
+use App\Http\Controllers\API\BerkasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -20,7 +22,8 @@ class MeController extends Controller
             $user->alamat = $request->alamat;
             $user->provinsi = $request->provinsi;
             $user->kota = $request->kota;
-            if ($user->save()) {
+            if ($user->save()) {                
+            (new BerkasController)->keteranganPendaftar();
                 return response()->json($user,200);
             } else {
                 return response()->json([
@@ -53,6 +56,7 @@ class MeController extends Controller
         }
        
         if ($user->save()) {
+            (new BerkasController)->keteranganPendaftar();
             return response()->json($user,200);
         } else {
             return response()->json([

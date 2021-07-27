@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
+
+
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BerkasController;
+use App\Http\Controllers\API\Fcm\BroadcastMessage;
 use App\Models\Bio;
 use App\Models\User;
+use App\Models\Pendaftar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -74,6 +79,7 @@ class BioController extends Controller
         }
        
         if ($bio->save()) {
+            (new BerkasController)->keteranganPendaftar();
             return response()->json($bio,200);
         } else {
             return response()->json([
@@ -97,6 +103,8 @@ class BioController extends Controller
     {
         if ($bio) {
              $input = $request->all();
+             $user=Auth::user();
+             (new BroadcastMessage)->keteranganPendaftar($user);
             
             if ($bio->fill($input)->save()) {
                 return response()->json([

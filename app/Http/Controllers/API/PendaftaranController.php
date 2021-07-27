@@ -49,9 +49,13 @@ class PendaftaranController extends Controller
             'pendaftaran_id'=>$request->pendaftaran_id,
             'status'=>0
         ]);
-
         if($pendaftar){
-            return response()->json('success',200);
+            $user->pendaftar_id=$pendaftar->id;
+            if($user->save()){
+                return response()->json(' daftar and user change success',200);
+
+            }
+            return response()->json(' daftar success',200);
         }else{
             return response()->json('failed',500);
 

@@ -10,14 +10,12 @@ use LaravelFCM\Message\PayloadNotificationBuilder;
 use FCM;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Pendaftar;
+
 class BroadcastMessage extends Controller
 {
-    protected $auth;
-
-    public function __construct(Auth $auth)
-    {
-       $this->auth = $auth;
-    }
+    
+    
     public static function sendMessage($sender, $message, $link, $token)
     {   
 
@@ -42,5 +40,15 @@ class BroadcastMessage extends Controller
         $downstreamResponse = FCM::sendTo($token, $option, $notification, $data);
 
         return $downstreamResponse->numberSuccess();
+    }
+
+    //ini di gunakan ketika user sudah mendaftar dan akan mengupdate kelengkapan dokumen
+    public function keteranganPendaftar($user){
+        // $user=Auth::user();
+        if($user->pendaftar_id!==null){
+            $pendaftar=Pendaftar::find($user->pendaftar_id);
+            $pendaftar->keterangan=$user->name;
+            $pendaftar->save();
+        }
     }
 }
