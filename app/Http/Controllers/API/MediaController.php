@@ -26,28 +26,61 @@ class MediaController extends Controller
     }
 
     
-    public function upload_image(Request $request, Media $media)
+    public function upload_image(Request $request)
     {
-        $old_path = $media->path;
-        Storage::delete('public/'.$old_path);
+        $image='';
+        $media=Media::find($request->id);
         if($request->hasFile('image')) {
             $request->validate([
                 'image'=>'required|image|mimes:jpeg,png,jpg'
             ]);
             $path = $request->file('image')->store('photo', 'public');
-            $media->path = $path; 
-            
+            $image=$path;
         }
+        if(is_null($media)){
+            $media=Media::create([
+                'name'=>$request->name,
+                'user_id'=>$request->user_id,
+                'type_id'=>$request->type_id,
+                'path'=>$image,
+            ]);
+            $old_path = '$media->path';
+        }else{
+            $old_path = $media->path;
+            Storage::delete('public/'.$old_path);
+            $media->update([
+                'name'=>$request->name,
+                'user_id'=>$request->user_id,
+                'type_id'=>$request->type_id,
+                'path'=>$image
+            ]);
+        }
+
+
+        
+        // if($request->hasFile('image')) {
+        //     $request->validate([
+        //         'image'=>'required|image|mimes:jpeg,png,jpg'
+        //     ]);
+        //     $path = $request->file('image')->store('photo', 'public');
+        //     $media->path = $path; 
+            
+        // }
        
-        if ($media->save()) {
-            return response()->json($media,200);
-        } else {
-            return response()->json([
-                'message'       => 'Error on Updated',
-                'status_code'   => 500
-            ],500);
-        } 
-        // return response()->json($request->all(),200);
+        // if ($media->save()) {
+        //     return response()->json($media,200);
+        // } else {
+        //     return response()->json([
+        //         'message'       => 'Error on Updated',
+        //         'status_code'   => 500
+        //     ],500);
+        // } 
+        return response()->json([
+            'image'=>$image,
+            'old_path'=>$old_path,
+            'media'=>$media,
+            'request'=>$request->all()
+        ],200);
 
     }
     /**

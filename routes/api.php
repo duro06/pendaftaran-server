@@ -35,7 +35,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     $user->load('media.type');
     return ['data'=>$user];
 });
-
+//public
+Route::get('admin/sekolah/get-sekolah',[SekolahController::class, 'index']);	
 // Auth
 Route::group(['prefix' => '/auth'], function() {
     Route::group(['middleware'=>'auth:sanctum'], function(){
@@ -47,7 +48,6 @@ Route::group(['prefix' => '/auth'], function() {
     Route::post('coba', [LoginController::class, 'coba']);
 
 });
-	Route::get('admin/sekolah/get-sekolah',[SekolahController::class, 'index']);	
 
 Route::group(['middleware'=>'auth:sanctum'], function(){
     // profile 
@@ -70,11 +70,13 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     Route::get('mapel',[NilaiController::class, 'index']);
     
     Route::get('nilai/nilai_by',[NilaiController::class, 'nilai_by']);
+    Route::get('nilai/media_by',[NilaiController::class, 'media_by']);
     Route::post('nilai',[NilaiController::class, 'store']);
     Route::post('nilai/update/{nilai}',[NilaiController::class, 'update']);
     
     Route::get('type',[NilaiController::class, 'type']);
-    Route::post('type/upload_image/{media}',[MediaController::class, 'upload_image']);
+    // Route::post('type/upload_image/{media}',[MediaController::class, 'upload_image']);
+    Route::post('type/upload_image',[MediaController::class, 'upload_image']);
     
     //pendaftaran
     Route::get('daftar',[PendaftaranController::class, 'index']);

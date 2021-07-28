@@ -23,9 +23,18 @@ class NilaiController extends Controller
     public function type()
     {
         $type=Type::get();
-        $type->load('media');
+        // $type->load('media');
         $type->load('mapel');
         return response()->json($type,200);
+    }
+
+    public function media_by(){
+        $user_id=request()->user_id;
+        $media=Media::where([
+            'user_id'=>$user_id
+        ])->get();
+        return response()->json($media,200);
+        // return response()->json(['media'=>$media,'user'=>$user_id],200);
     }
 
     public function nilai_by(){

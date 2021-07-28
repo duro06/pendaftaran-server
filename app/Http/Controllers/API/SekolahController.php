@@ -55,7 +55,6 @@ class SekolahController extends Controller
         }
        
         if ($sekolah->save()) {
-            (new BerkasController)->keteranganPendaftar();
             return response()->json($sekolah,200);
         } else {
             return response()->json([
