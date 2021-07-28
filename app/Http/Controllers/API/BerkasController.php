@@ -21,7 +21,7 @@ class BerkasController extends Controller
     public function get_by_id(){
         $user=Auth::user();
         $pendaftar=Pendaftar::find(request()->id);
-        if($pendaftar->status<1){
+        if($pendaftar->status<1 && $user->role=="Admin"){
             $pendaftar->status=1;
             $pendaftar->status_by=$user->id;
             $pendaftar->keterangan=null;
