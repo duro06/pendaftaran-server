@@ -44,9 +44,10 @@ Route::group(['prefix' => '/auth'], function() {
 
     Route::post('register', [RegisterController::class, 'register']); // ini untuk alamat api/auth/register
     Route::post('login', [LoginController::class, 'login']);
-    Route::post('coba', [LoginController::class, 'coba']);      
+    Route::post('coba', [LoginController::class, 'coba']);
 
 });
+	Route::get('admin/sekolah/get-sekolah',[SekolahController::class, 'index']);	
 
 Route::group(['middleware'=>'auth:sanctum'], function(){
     // profile 
@@ -100,6 +101,8 @@ Route::group(['middleware'=>'auth:sanctum'], function(){
     Route::get('admin/berkas/by_id',[BerkasController::class, 'get_by_id']);
     Route::post('admin/berkas/status_change',[BerkasController::class, 'status_change']);
     
-    Route::get('admin/sekolah/get-sekolah',[SekolahController::class, 'index']);
+    
     Route::post('admin/sekolah/store',[SekolahController::class, 'store']);
+    
+    Route::post('sekolah/upload_image/{sekolah}',[SekolahController::class, 'upload_image']);
 });

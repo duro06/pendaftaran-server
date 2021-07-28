@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Sekolah;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SekolahController extends Controller
 {
@@ -39,37 +40,30 @@ class SekolahController extends Controller
         return response()->json($sekolah,200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Sekolah  $sekolah
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Sekolah $sekolah)
-    {
-        //
-    }
+    public function upload_image(Request $request, Sekolah $sekolah){
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Sekolah  $sekolah
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Sekolah $sekolah)
-    {
-        //
-    }
+        
+        $old_path = $sekolah->path;
+        Storage::delete('public/'.$old_path);
+        if($request->hasFile('image')) {
+            $request->validate([
+                'image'=>'required|image|mimes:jpeg,png,jpg'
+            ]);
+            $path = $request->file('image')->store('sekolah', 'public');
+            $sekolah->path = $path; 
+            
+        }
+       
+        if ($sekolah->save()) {
+            (new BerkasController)->keteranganPendaftar();
+            return response()->json($sekolah,200);
+        } else {
+            return response()->json([
+                'message'       => 'Error on Updated',
+                'status_code'   => 500
+            ],500);
+        } 
+        // return response()->json($request->all(),200);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Sekolah  $sekolah
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Sekolah $sekolah)
-    {
-        //
     }
 }
